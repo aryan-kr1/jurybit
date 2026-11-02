@@ -5,6 +5,7 @@ import Problems from "./pages/Problems.jsx";
 import Problem from "./pages/Problem.jsx";
 import Contests from "./pages/Contests.jsx";
 import Contest from "./pages/Contest.jsx";
+import Admin from "./pages/Admin.jsx";
 
 function Protected({ children }) {
   const { token } = useAuth();
@@ -12,7 +13,7 @@ function Protected({ children }) {
 }
 
 export default function App() {
-  const { token, logout } = useAuth();
+  const { token, isAdmin, logout } = useAuth();
 
   return (
     <>
@@ -24,6 +25,7 @@ export default function App() {
           <nav className="nav">
             <Link to="/">Problems</Link>
             <Link to="/contests">Contests</Link>
+            {isAdmin && <Link to="/admin">Admin</Link>}
           </nav>
         )}
         {token && (
@@ -72,6 +74,14 @@ export default function App() {
             element={
               <Protected>
                 <Problem />
+              </Protected>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <Protected>
+                <Admin />
               </Protected>
             }
           />
