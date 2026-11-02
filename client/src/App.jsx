@@ -8,6 +8,8 @@ import Contest from "./pages/Contest.jsx";
 import Admin from "./pages/Admin.jsx";
 import AdminContests from "./pages/AdminContests.jsx";
 import AdminContestForm from "./pages/AdminContestForm.jsx";
+import AdminProblems from "./pages/AdminProblems.jsx";
+import AdminProblemForm from "./pages/AdminProblemForm.jsx";
 
 function Protected({ children }) {
   const { token } = useAuth();
@@ -114,6 +116,30 @@ export default function App() {
             element={
               <AdminRoute>
                 <AdminContestForm />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/problems"
+            element={
+              <AdminRoute>
+                <AdminProblems />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/problems/new"
+            element={
+              <AdminRoute>
+                <AdminProblemForm />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/problems/:id"
+            element={
+              <AdminRoute>
+                <AdminProblemForm />
               </AdminRoute>
             }
           />

@@ -145,6 +145,27 @@ router.get("/:slug", authenticate, async (req, res) => {
 
 // ---------- Admin ----------
 
+router.get("/:id/full", authenticate, requireAdmin, async (req, res) => {
+  const id = parseId(req.params.id);
+  if (id === null) return res.status(400).json({ error: "Invalid problem id" });
+
+  try {
+    const result = await pool.query(
+      `SELECT id, slug, title, statement, difficulty, time_limit_ms,
+              memory_limit_mb, reference_solution, test_generator
+       FROM problems WHERE id = $1`,
+      [id],
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Problem not found" });
+    }
+    return res.json({ problem: result.rows[0] });
+  } catch (err) {
+    console.error("Get full problem error:", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router.post("/", authenticate, requireAdmin, async (req, res) => {
   const { error, values } = validateProblemFields(req.body, true);
   if (error) return res.status(400).json({ error });

@@ -7,7 +7,10 @@ export default function Admin() {
       <p>
         <Link to="/admin/contests">Contests</Link>
       </p>
-      <p className="meta">Problems and test cases will be added here next.</p>
+      <p>
+        <Link to="/admin/problems">Problems</Link>
+      </p>
+      <p className="meta">Test cases will be added here next.</p>
     </div>
   );
 }

@@ -293,3 +293,11 @@ progress {
 .notice {
   color: #166534;
 }
+
+/* admin problem form */
+.code-area {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  white-space: pre;
+  overflow: auto;
+}
