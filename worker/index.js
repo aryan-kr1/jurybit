@@ -13,6 +13,12 @@ const connection = new IORedis(process.env.REDIS_URL, {
 });
 const leaderboard = createLeaderboard({ pool, redis: connection });
 
+// How many submissions are judged at the same time (default 1).
+const CONCURRENCY = Math.max(
+  1,
+  parseInt(process.env.WORKER_CONCURRENCY, 10) || 1,
+);
+
 const TMP_BASE = path.join(__dirname, ".tmp-judge");
 const EXT = { python: "py", cpp: "cpp" };
 
@@ -156,7 +162,7 @@ async function judge(job) {
 
 const worker = new Worker("submissions", judge, {
   connection,
-  concurrency: 1,
+  concurrency: CONCURRENCY,
 });
 
 worker.on("completed", (job, result) => {
@@ -193,4 +199,4 @@ async function shutdown() {
 process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
 
-console.log("Worker started, waiting for jobs...");
+console.log(`Worker started (concurrency ${CONCURRENCY}), waiting for jobs...`);
