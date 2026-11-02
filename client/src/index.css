@@ -301,3 +301,14 @@ progress {
   white-space: pre;
   overflow: auto;
 }
+
+/* admin test cases */
+.preview {
+  display: inline-block;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-size: 12px;
+}

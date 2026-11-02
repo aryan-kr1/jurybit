@@ -10,7 +10,9 @@ export default function Admin() {
       <p>
         <Link to="/admin/problems">Problems</Link>
       </p>
-      <p className="meta">Test cases will be added here next.</p>
+      <p className="meta">
+        Test cases are managed from the Tests link in the problem list.
+      </p>
     </div>
   );
 }

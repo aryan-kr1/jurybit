@@ -269,6 +269,40 @@ router.get("/:id/test-cases", authenticate, requireAdmin, async (req, res) => {
   }
 });
 
+router.get(
+  "/:id/test-cases/summary",
+  authenticate,
+  requireAdmin,
+  async (req, res) => {
+    const id = parseId(req.params.id);
+    if (id === null) {
+      return res.status(400).json({ error: "Invalid problem id" });
+    }
+
+    try {
+      const exists = await pool.query("SELECT 1 FROM problems WHERE id = $1", [
+        id,
+      ]);
+      if (exists.rows.length === 0) {
+        return res.status(404).json({ error: "Problem not found" });
+      }
+
+      const result = await pool.query(
+        `SELECT id, is_sample, position,
+                octet_length(input) AS input_bytes,
+                octet_length(expected_output) AS output_bytes,
+                left(input, 80) AS input_preview
+         FROM test_cases WHERE problem_id = $1 ORDER BY position, id`,
+        [id],
+      );
+      return res.json({ test_cases: result.rows });
+    } catch (err) {
+      console.error("Test case summary error:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+);
+
 router.post("/:id/test-cases", authenticate, requireAdmin, async (req, res) => {
   const id = parseId(req.params.id);
   if (id === null) return res.status(400).json({ error: "Invalid problem id" });

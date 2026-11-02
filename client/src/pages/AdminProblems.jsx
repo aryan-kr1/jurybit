@@ -70,6 +70,7 @@ export default function AdminProblems() {
                 <td>
                   <div className="admin-actions">
                     <Link to={`/admin/problems/${p.id}`}>Edit</Link>
+                    <Link to={`/admin/problems/${p.id}/tests`}>Tests</Link>
                     <button
                       type="button"
                       className="link"
