@@ -7,6 +7,11 @@ const problemRoutes = require("./routes/problems");
 const submissionRoutes = require("./routes/submissions");
 const contestRoutes = require("./routes/contests");
 const leaderboardRoutes = require("./routes/leaderboard");
+const {
+  loginLimiter,
+  registerLimiter,
+  submitLimiter,
+} = require("./rateLimits");
 
 if (!process.env.JWT_SECRET) {
   console.error("JWT_SECRET is missing in .env");
@@ -16,6 +21,11 @@ if (!process.env.JWT_SECRET) {
 const app = express();
 
 app.use(cors());
+
+// Rate limits run before the routes (they only act on these exact paths).
+app.post("/api/auth/login", loginLimiter);
+app.post("/api/auth/register", registerLimiter);
+app.post("/api/submissions", submitLimiter);
 
 app.use("/api/problems", express.json({ limit: "10mb" }), problemRoutes);
 app.use("/api/submissions", express.json({ limit: "200kb" }), submissionRoutes);
