@@ -6,10 +6,18 @@ import Problem from "./pages/Problem.jsx";
 import Contests from "./pages/Contests.jsx";
 import Contest from "./pages/Contest.jsx";
 import Admin from "./pages/Admin.jsx";
+import AdminContests from "./pages/AdminContests.jsx";
+import AdminContestForm from "./pages/AdminContestForm.jsx";
 
 function Protected({ children }) {
   const { token } = useAuth();
   return token ? children : <Navigate to="/login" replace />;
+}
+
+function AdminRoute({ children }) {
+  const { token, isAdmin } = useAuth();
+  if (!token) return <Navigate to="/login" replace />;
+  return isAdmin ? children : <Navigate to="/" replace />;
 }
 
 export default function App() {
@@ -80,9 +88,33 @@ export default function App() {
           <Route
             path="/admin"
             element={
-              <Protected>
+              <AdminRoute>
                 <Admin />
-              </Protected>
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/contests"
+            element={
+              <AdminRoute>
+                <AdminContests />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/contests/new"
+            element={
+              <AdminRoute>
+                <AdminContestForm />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/contests/:id"
+            element={
+              <AdminRoute>
+                <AdminContestForm />
+              </AdminRoute>
             }
           />
           <Route path="*" element={<Navigate to="/" replace />} />

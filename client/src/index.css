@@ -252,3 +252,44 @@ progress {
 .board .cell.bad {
   color: #b42318;
 }
+
+/* admin panel */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+  vertical-align: middle;
+}
+.admin-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.picker-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+.picker-label {
+  font-weight: 700;
+  width: 24px;
+}
+.picker-grow {
+  flex: 1;
+}
+.notice {
+  color: #166534;
+}
