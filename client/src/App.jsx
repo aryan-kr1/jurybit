@@ -30,7 +30,7 @@ export default function App() {
     <>
       <header className="topbar">
         <Link to="/" className="brand">
-          Online Judge
+          Jurybit
         </Link>
         {token && (
           <nav className="nav">
